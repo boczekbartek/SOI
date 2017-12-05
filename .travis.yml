@@ -1,3 +1,6 @@
 language: cpp
 sudo: false
 script: ./build.sh
+notifications:
+  email: false
+

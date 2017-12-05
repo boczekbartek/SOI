@@ -12,10 +12,9 @@
 
 typedef struct Buffer {
     int begIdx, endIdx;
-    bool readable;
+    int readByCnt; //counter of consumers that already read first element
     Element **content; //pointer to table with content
     unsigned int bufferSize;
-    unsigned int numOfElemsInBuf;
 
     /* methods */
     char (*pop)(struct Buffer *self, Consumer* consumer);

@@ -14,7 +14,8 @@ int produce(struct Producer *self, struct Buffer *buffer) {
         produced[i] = produced_elem;
     }
     for (int i = 0; i < self->producedAtOnce; ++i) {
-        printf("Produced char: %c\n", produced[i]->data);
+        printf("Produced char: \'%c\' by producer with id = %d\n",
+               produced[i]->data, self->id);
         buffer->push(buffer, produced[i]);
     }
     free(produced);
