@@ -8,13 +8,15 @@
 #include "buffer.h"
 
 typedef struct Producer {
-    int id;
+    unsigned int id;
 
     unsigned int producedAtOnce;
-    int (*produce)(struct Producer* self, struct Buffer* buffer);
-}Producer;
 
-int produce(struct Producer* self, struct Buffer* buffer);
+    int (*produce)(struct Producer *self, struct Buffer *buffer);
+} Producer;
 
-Producer* newProducer(int id, unsigned int producedAtOnce);
+int produce(struct Producer *self, struct Buffer *buffer);
+
+Producer *newProducer(unsigned int id, unsigned int producedAtOnce);
+
 #endif //FIFO_BUFFER_PRODUCER_H

@@ -1,24 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "element.h"
 #include "config.h"
 #include "producer.h"
 #include "buffer.h"
 
 int main() {
-    Element* e = newElem();
-    int i = 0;
-    for (i; i < CONSUMERS; ++i) {
-        printf("To jest: %s\n", boolNames[e->alreadyReadBy[i]]);
-    }
+    srand(time(NULL));
 
-    Buffer* buffer = newBuffer(BUF_SIZE);
-    buffer->content[5] = 'a';
-    buffer->content[7] = 'c';
+    unsigned int producer2id = 1;
+    unsigned int producer2ElementOnceProcuded = 2;
+    Producer* producer2 = newProducer(producer2id,
+                                      producer2ElementOnceProcuded);
+
+    Buffer *buffer = newBuffer(BUF_SIZE);
+    producer2->produce(producer2, buffer);
+    producer2->produce(producer2, buffer);
     buffer->printBuffer(buffer);
-//    Producer* newProducer1 = newProducer(1, 1);
-//    Producer* newProducer2 = newProducer(1, 2);
-//    if (newProducer2->produce(newProducer2, buffer) == 0) printf("Produced "
-//                                                           "successfully!!!\n");
+    Consumer* consumer0 = newConsumer(0);
+    Consumer* consumer1 = newConsumer(1);
+
+    buffer->pop(buffer, consumer1);
+    buffer->pop(buffer, consumer1);
+    buffer->pop(buffer, consumer1);
+
+    buffer->pop(buffer, consumer0);
+    buffer->pop(buffer, consumer1);
+    buffer->pop(buffer, consumer1);
+
+    buffer->printBuffer(buffer);
+
     return 0;
 }

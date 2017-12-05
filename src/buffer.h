@@ -7,23 +7,30 @@
 
 #include <glob.h>
 #include "types.h"
+#include "element.h"
+#include "consumer.h"
 
-typedef struct Buffer{
-    int begIdx,endIdx;
+typedef struct Buffer {
+    int begIdx, endIdx;
     bool readable;
-    char* content;
-    size_t bufferSize;
+    Element **content; //pointer to table with content
+    unsigned int bufferSize;
+    unsigned int numOfElemsInBuf;
+
     /* methods */
-    void (*init)(struct Buffer* self);
-    char (*pop)(struct Buffer* self);
-    int (*push)(struct Buffer* self);
-    void (*printBuffer)(struct Buffer* self);
+    char (*pop)(struct Buffer *self, Consumer* consumer);
+
+    int (*push)(struct Buffer *self, Element *element);
+
+    void (*printBuffer)(struct Buffer *self);
 } Buffer;
 
-char pop(struct Buffer* self);
-int push(struct Buffer* self);
+char pop(struct Buffer *self, Consumer* consumer);
 
-Buffer* newBuffer(size_t bufferSize);
-void printBuffer(struct Buffer* self);
+int push(struct Buffer *self, Element *element);
+
+Buffer *newBuffer(unsigned int bufferSize);
+
+void printBuffer(struct Buffer *self);
 
 #endif //FIFO_BUFFER_BUFFER_H

@@ -7,25 +7,27 @@
 #include <time.h>
 #include "producer.h"
 
-int produce(struct Producer* self, struct Buffer* buffer) {
-    srand(time(NULL));
-    char* produced = (char*)malloc(self->producedAtOnce);
-    for(int i =0; i<self->producedAtOnce; ++i){
-        produced[i] = 'A' + (random() % 26);
+int produce(struct Producer *self, struct Buffer *buffer) {
+    Element **produced = malloc(self->producedAtOnce * sizeof(Element *));
+    for (int i = 0; i < self->producedAtOnce; ++i) {
+        Element *produced_elem = newElem('A' + (random() % 26));
+        produced[i] = produced_elem;
     }
-    for(int i = 0; i<self->producedAtOnce; ++i) {
-        printf("Produced char: %c\n", produced[i]);
+    for (int i = 0; i < self->producedAtOnce; ++i) {
+        printf("Produced char: %c\n", produced[i]->data);
+        buffer->push(buffer, produced[i]);
     }
     free(produced);
     return 0;
 }
 
-Producer* newProducer(const int id, unsigned int producedAtOnce) {
+Producer *
+newProducer(const unsigned int id, const unsigned int producedAtOnce) {
     /**
     *
     *@return Initialized Producer structure
     */
-    Producer* p = (Producer*)malloc(sizeof(Producer));
+    Producer *p = (Producer *) malloc(sizeof(Producer));
     p->id = id;
     p->producedAtOnce = producedAtOnce;
     p->produce = &produce;

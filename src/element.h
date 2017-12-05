@@ -8,23 +8,21 @@
 #include "types.h"
 #include "config.h"
 
-typedef struct Element{
+typedef struct Element {
 
     char data;
 
     // Each index of array responds to index number of consumer. When
     // consumer 0 reads this element, alreadyReadBy[0] will be set to true.
-    bool alreadyReadBy[CONSUMERS];
+    int alreadyReadBy[CONSUMERS];
 
     /* methods */
-    void (*init)(struct Element* self);
+    void (*init)(struct Element *self);
 } Element;
 
-/*** private methods ***/
-static void __initElem(Element *self);
 
 /*** public methods ***/
 /* constructor */
-Element* newElem(void);
+Element *newElem(char data);
 
 #endif //FIFO_BUFFER_ELEM_H
