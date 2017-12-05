@@ -20,7 +20,7 @@ typedef struct Elem{
 /*** private methods ***/
 static void __initElem(Elem *self);
 
-/*** public methods ***/
+/***thu public methods ***/
 /* constructor */
 Elem newElem(void);
 
