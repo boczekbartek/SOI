@@ -5,7 +5,7 @@
 #ifndef FIFO_BUFFER_CONFIG_H
 #define FIFO_BUFFER_CONFIG_H
 
-#define BUF_SIZE 100
+#define BUF_SIZE 10
 #define CONSUMERS 2
 #define PRODUCERS 2
 

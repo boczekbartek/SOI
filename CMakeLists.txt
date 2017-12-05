@@ -3,5 +3,5 @@ project(FIFO_buffer)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES src/main.c src/elem.h src/types.h src/config.h src/elem.c src/types.c src/buffer.h)
+set(SOURCE_FILES src/main.c src/element.h src/types.h src/config.h src/element.c src/types.c src/buffer.h src/buffer.c src/producer.c src/producer.h)
 add_executable(FIFO_buffer ${SOURCE_FILES})
