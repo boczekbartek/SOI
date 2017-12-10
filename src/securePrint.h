@@ -1,0 +1,8 @@
+//
+// Created by bartek on 06.12.17.
+//
+
+#ifndef FIFO_BUFFER_SECUREPRINT_H
+#define FIFO_BUFFER_SECUREPRINT_H
+
+#endif //FIFO_BUFFER_SECUREPRINT_H
