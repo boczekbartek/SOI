@@ -3,16 +3,17 @@
 //
 
 #include <semaphore.h>
-#include <cstdarg>
-#include <cstdio>
+#include <stdarg.h>
+#include <stdio.h>
 
 #include "securePrint.h"
 
-void securePrintf(const char * fmt, ...){
-    sem_wait(&sem);
+void securePrintf(sem_t *printMutex, const char *fmt, ...) {
+    sem_wait(printMutex);
     va_list args;
     va_start(args, fmt);
     vprintf(fmt, args);
     va_end(args);
-    sem_post(&sem);
+    sem_post(printMutex);
+
 }

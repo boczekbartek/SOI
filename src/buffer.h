@@ -6,30 +6,38 @@
 #define FIFO_BUFFER_BUFFER_H
 
 #include <glob.h>
+#include <semaphore.h>
+
+#include "consumer.h"
 #include "types.h"
 #include "element.h"
-#include "consumer.h"
 
+struct Consumer;
 typedef struct Buffer {
     int begIdx, endIdx;
     int readByCnt; //counter of consumers that already read first element
-    Element **content; //pointer to table with content
+    Element content[BUF_SIZE]; //pointer to table with content
     unsigned int bufferSize;
-
+    /* semaphores */
+    sem_t mutex;
+    sem_t items;
+    sem_t spaces;
+    sem_t firstElemMutex;
+    sem_t *printMutex;
     /* methods */
-    char (*pop)(struct Buffer *self, Consumer* consumer);
+    char (*pop)(struct Buffer *self, struct Consumer* consumer);
 
     int (*push)(struct Buffer *self, Element *element);
 
-    void (*printBuffer)(struct Buffer *self);
+    void (*printBuffer)(sem_t *printMutex, struct Buffer *self);
 } Buffer;
 
-char pop(struct Buffer *self, Consumer* consumer);
+char pop(struct Buffer *self, struct Consumer* consumer);
 
 int push(struct Buffer *self, Element *element);
 
-Buffer *newBuffer(unsigned int bufferSize);
+Buffer *newBuffer(unsigned int bufferSize, sem_t *printMutex);
 
-void printBuffer(struct Buffer *self);
+void printBuffer(sem_t *printMutex, struct Buffer *self);
 
 #endif //FIFO_BUFFER_BUFFER_H
